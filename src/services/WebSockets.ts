@@ -15,10 +15,6 @@ class WebSockets {
     this.socket.on('roomUsersUpdated', (message: any) => {
       console.log(message)
     })
-    
-    this.socket.on('error', (message: any) => {
-      console.log(message)
-    })
   }
 
   sendMessage (message: string) {
@@ -34,10 +30,12 @@ class WebSockets {
   }
 
   joinRoom (roomId: string): Promise<Room> {
-    return new Promise((res) => {
+    return new Promise((res, rej) => {
       this.socket.emit('joinRoom', roomId)
 
       this.socket.on('successfulJoin', (room: Room) => res(room))
+
+      this.socket.on('joinRoomError', (message: string) => rej(message))
     })
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component } from "react"; 
+import React, { Component, FormEvent } from "react"; 
 import { Search, Star } from 'react-feather';
 import { RouteComponentProps } from 'react-router';
 
@@ -18,29 +18,49 @@ interface VoteProps extends RouteComponentProps<MatchParams> {
   setUserRoom: (arg0: Room) => void
 }
 
-class Vote extends Component<VoteProps> {
+interface VoteState {
+  username: string;
+}
+
+class Vote extends Component<VoteProps, VoteState> {
+  state = {
+    username: ''
+  }
+
   async componentDidMount () {
-    const { setUserRoom, match: { params }, user} = this.props
+    const { setUserRoom, match: { params }, history, user} = this.props
 
     if (!user || !user.username) {
-      const room = await WebSockets.joinRoom(params.id)
+      try {
+        const room = await WebSockets.joinRoom(params.id)
 
-      return setUserRoom(room)
+        return setUserRoom(room)
+      } catch (error) {
+        history.push('/404')
+        console.log(error)
+      }
     }
   }
 
   render () {
     const { user, classes } = this.props;
+    const { username } = this.state;
 
     return (
       <main className={classes.root}>
-        <Modal isOpen={!user || !user.username}>
+        <Modal closeButton={false} isOpen={!user || !user.username} className={classes.modal}>
           <Text h3>Hello!</Text>
-          <Text h4>You've joined a vote for a place to eat in <b>{user?.room?.location?.name}</b>.</Text>
+          <Text>You've joined a vote for a place to eat in <b>{user?.room?.location?.name}</b>.</Text>
           <Text>Start by entering a username and selecting <b>up to three</b> of your favourite restaurants.</Text>
           <Text>Hit the "I'm ready" button once you've finished your selection!</Text>
-          <Input placeholder="Enter a username" />
-          <Button icon={<Star />}>Start Voting</Button>
+          <div style={{ display: 'flex', flexDirection: 'column', marginTop: 16 }}>
+            <Input
+              placeholder="Enter a username"
+              value={username}
+              onChange={(e: FormEvent<HTMLInputElement>) => this.setState({ username: e.currentTarget.value })}
+            />
+            <Button disabled={username.length <= 0} icon={<Star />}>Start Voting</Button>
+          </div>
         </Modal>
         <Text
           style={{

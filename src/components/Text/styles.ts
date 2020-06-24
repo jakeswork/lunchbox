@@ -46,6 +46,7 @@ const styles = (theme: Theme) => ({
     fontSize: 16,
     fontWeight: 400,
     color: primaryColor ? theme.colorPrimary : theme.textPrimary,
+    marginBottom: 8,
   }),
   [theme.media.mobile as any]: {
     h1: {

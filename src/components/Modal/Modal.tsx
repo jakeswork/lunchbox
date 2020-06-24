@@ -1,19 +1,21 @@
 import React, { FC } from 'react';
 import ReactModal from 'react-modal';
 import { X } from 'react-feather';
+import cx from 'classnames';
 
 import { Classes } from './styles';
 import './react-modal.css';
 
 interface ModalProps {
   classes: Classes
+  closeButton?: boolean;
 }
 
 ReactModal.setAppElement('#root')
 
-const Modal: FC<ReactModal.Props & ModalProps> = ({ classes = {}, children, ...props }) => (
+const Modal: FC<ReactModal.Props & ModalProps> = ({ classes = {}, className, children, closeButton = true, ...props }) => (
   <ReactModal
-    className={classes.modal}
+    className={cx(classes.modal, className)}
     closeTimeoutMS={200}
     contentLabel="Modal"
     style={{
@@ -25,7 +27,7 @@ const Modal: FC<ReactModal.Props & ModalProps> = ({ classes = {}, children, ...p
     }}
     {...props}
   >
-    <X className={classes.closeModal} onClick={props.onRequestClose} />
+    {closeButton && <X className={classes.closeModal} onClick={props.onRequestClose} />}
     {children}
   </ReactModal>
 )

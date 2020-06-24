@@ -17,6 +17,9 @@ export default {
   colMd: column(50),
   colLg: column(75),
   colFull: column(100),
+  modal: {
+    height: 'auto'
+  },
 };
 
 export type Classes = {
@@ -25,4 +28,5 @@ export type Classes = {
   colMd: string;
   colLg: string;
   colFull: string;
+  modal: string;
 };

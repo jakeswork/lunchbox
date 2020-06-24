@@ -10,6 +10,9 @@ export default (theme: Theme) => ({
     position: 'relative',
     border: `1px solid ${theme.colorGrey}`,
     borderRadius: 4,
+    '&:focus': {
+      outlineColor: theme.colorPrimary
+    }
   },
   closeModal: {
     position: 'absolute',
