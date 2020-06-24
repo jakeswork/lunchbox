@@ -16,22 +16,6 @@ export default (theme: Theme) => ({
     flexDirection: 'column',
     marginTop: 72,
   },
-  modal: {
-    height: 460,
-    width: 560,
-    padding: 32,
-    margin: '0 auto',
-    background: 'white',
-    position: 'relative',
-    border: `1px solid ${theme.colorGrey}`,
-    borderRadius: 4,
-  },
-  closeModal: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    cursor: 'pointer',
-  },
   dotsWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -101,8 +85,6 @@ export type Classes = {
   main: string;
   headingImg: string;
   buttonsContainer: string;
-  modal: string;
-  closeModal: string;
   dotsWrapper: string;
   dot: string;
   slide: string;

@@ -1,4 +1,4 @@
-import { SET_USER, UserActionTypes, DELETE_USER, UPDATE_USER } from './types';
+import { SET_USER, UserActionTypes, DELETE_USER, UPDATE_USER, SET_USER_ROOM } from './types';
 
 const defaultState = {
   username: '',
@@ -21,6 +21,12 @@ export default (state = defaultState, action: UserActionTypes) => {
       return {
         ...state,
         ...action.payload
+      }
+
+    case SET_USER_ROOM:
+      return {
+        ...state,
+        room: action.payload
       }
 
     default: return state

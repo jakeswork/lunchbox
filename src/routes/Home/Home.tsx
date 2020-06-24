@@ -1,26 +1,22 @@
 import React, { FC, useState, FormEvent, createRef } from 'react';
-import { Plus, LogIn, X, ArrowRight, Star, Search, Clipboard, Check } from 'react-feather';
+import { Plus, LogIn, ArrowRight, Star, Search, Clipboard, Check } from 'react-feather';
 import { Link } from 'react-router-dom';
-import Modal from 'react-modal';
 import SwipeableViews from 'react-swipeable-views';
 import cx from 'classnames';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 import WebSockets from '../../services/WebSockets';
-import './react-modal.css';
 import header from '../../images/header.svg';
-import { Text, Button, Input } from '../../components';
+import { Text, Button, Input, Modal } from '../../components';
 import { Classes } from './styles';
 import { User, Location } from '../../types/constants';
 import Zomato from '../../services/Zomato';
 
 interface IHomeProps {
   classes: Classes
-  setUser: Function;
+  setUser: (arg0: User) => void;
   user: User;
 }
-
-Modal.setAppElement('#root')
 
 const Home: FC<IHomeProps> = ({ classes = {}, setUser, user }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -67,10 +63,10 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user }) => {
   const createRoom = async () => {
     setCreatingRoom(true)
 
-    if (!selectedCity) return null;
+    if (!selectedCity || !user.username) return null;
 
     try {
-      const roomId = await WebSockets.createRoom(user.username, selectedCity.id)
+      const roomId = await WebSockets.createRoom(user.username, selectedCity)
 
       setCreatingRoom(false);
       setCurrentSlide(currentSlide + 1);
@@ -92,22 +88,11 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user }) => {
         </div>
       </div>
       <Modal
-        className={classes.modal}
-        closeTimeoutMS={200}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         onAfterOpen={() => usernameInput?.current?.focus()}
-        contentLabel="Start A Vote"
-        style={{
-          overlay: {
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }
-        }}
       >
         <Text h3>Start a vote</Text>
-        <X className={classes.closeModal} onClick={closeModal} />
         <Text>Follow the instructions below to open your vote.</Text>
         <SwipeableViews
           onTransitionEnd={() => setDisabledInput(currentSlide - 1)}

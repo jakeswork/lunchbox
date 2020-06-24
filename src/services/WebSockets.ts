@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
 
+import { Room, Location } from '../types/constants';
+
 const serverUrl = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localhost:5000'
 
 interface WebSockets {
@@ -10,7 +12,7 @@ class WebSockets {
   constructor () {
     this.socket = io(serverUrl)
 
-    this.socket.on('roomUsers', (message: any) => {
+    this.socket.on('roomUsersUpdated', (message: any) => {
       console.log(message)
     })
     
@@ -23,16 +25,20 @@ class WebSockets {
     return this.socket.emit('chatMessage', message)
   }
 
-  createRoom (username: string, cityId: number): Promise<string> {
+  createRoom (username: string, location: Location): Promise<string> {
     return new Promise((res) => {
-      this.socket.emit('createRoom', username, cityId)
+      this.socket.emit('createRoom', username, location)
 
       this.socket.on('successfulCreate', (roomId: string) => res(roomId))
     })
   }
 
-  joinRoom (username: string, roomId: string) {
-    return this.socket.emit('joinRoom', username, roomId)
+  joinRoom (roomId: string): Promise<Room> {
+    return new Promise((res) => {
+      this.socket.emit('joinRoom', roomId)
+
+      this.socket.on('successfulJoin', (room: Room) => res(room))
+    })
   }
 }
 
