@@ -1,13 +1,43 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { StrictMode } from 'react';
+import { render } from 'react-dom';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { ThemeProvider } from 'react-jss';
+import { Provider } from 'react-redux';
+import 'normalize.css';
+import 'typeface-karla';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+import * as serviceWorker from './serviceWorker';
+import routes from "./routes";
+import theme from './utils/theme';
+import store from './reducers';
+
+render(
+  <StrictMode>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            {routes.map(({ path, Component, title }) => (
+              <Route
+                key={path}
+                path={path}
+                exact
+                render={() => (
+                  <>
+                    <Helmet>
+                      <title>{title}</title>
+                    </Helmet>
+                    <Component />
+                  </>
+                )}
+              />
+            ))}
+          </Switch>
+        </Router>
+      </ThemeProvider>
+    </Provider>
+  </StrictMode>,
   document.getElementById('root')
 );
 
