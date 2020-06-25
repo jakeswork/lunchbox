@@ -4,7 +4,6 @@ import { X } from 'react-feather';
 import cx from 'classnames';
 
 import { Classes } from './styles';
-import './react-modal.css';
 
 interface ModalProps {
   classes: Classes

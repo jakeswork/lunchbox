@@ -15,6 +15,7 @@ export default (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     marginTop: 72,
+    position: 'relative',
   },
   dotsWrapper: {
     justifyContent: 'center',
@@ -41,27 +42,6 @@ export default (theme: Theme) => ({
   nextButton: {
     width: '100%'
   },
-  suggestionsWrapper: {
-    borderRadius: 4,
-    border: `1px solid ${theme.colorGrey}`,
-    padding: '16px 24px',
-    margin: '4px 0',
-    position: 'absolute',
-    top: 56,
-    left: 0,
-    right: 0,
-    maxHeight: 160,
-    overflowY: 'scroll',
-    zIndex: 2,
-    backgroundColor: 'white'
-  },
-  suggestion: {
-    cursor: 'pointer',
-    borderBottom: `1px solid ${theme.colorGrey}`,
-    marginTop: 8,
-    paddingBottom: 4,
-    marginBottom: 4,
-  },
   link: {
     textDecoration: 'none',
     fontSize: 16,
@@ -79,6 +59,18 @@ export default (theme: Theme) => ({
     justifyContent: 'space-between',
     marginTop: 32,
   },
+  joinVotePanel: {
+    padding: 16,
+    position: 'absolute',
+    bottom: -192,
+    right: 0,
+    left: 0,
+    borderRadius: 4,
+    border: `1px solid ${theme.colorGrey}`,
+    display: 'flex',
+    flexDirection: 'column',
+    background: 'white',
+  }
 });
 
 export type Classes = {
@@ -90,10 +82,9 @@ export type Classes = {
   slide: string;
   dotActive: string;
   nextButton: string;
-  suggestionsWrapper: string;
-  suggestion: string;
   linkWrapper: string;
   link: string;
   copyButton: string;
   copyButtonIcon: string;
+  joinVotePanel: string;
 }

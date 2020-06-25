@@ -35,6 +35,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
   value = '',
   width = '',
   ignoreTab = false,
+  onFocus = () => {},
+  onBlur = () => {},
   ...props
 }, ref) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -53,16 +55,21 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
       )}
       {icon && React.cloneElement(icon, { className: classes.inputIcon })}
       <input
+        {...props}
         ref={ref}
-        onFocus={() => {
+        onFocus={(event) => {
           setIsFocused(true);
 
-          return inputIsFocused && inputIsFocused(true);
+          inputIsFocused && inputIsFocused(true);
+
+          return onFocus && onFocus(event)
         }}
-        onBlur={() => {
+        onBlur={(event) => {
           setIsFocused(value.length > 0);
 
-          return inputIsFocused && inputIsFocused(false);
+          inputIsFocused && inputIsFocused(false);
+
+          return onBlur && onBlur(event)
         }}
         className={classNames(classes.input, {
           [classes.inputActive]: isFocused
@@ -73,7 +80,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(({
 
           if (e.keyCode === 9 && ignoreTab) return e.preventDefault()
         }}
-        {...props}
       />
     </div>
   )}

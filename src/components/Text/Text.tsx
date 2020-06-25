@@ -1,4 +1,5 @@
 import React, { HTMLAttributes } from "react";
+import cx from 'classnames';
 
 import { Classes } from "./styles";
 
@@ -12,6 +13,7 @@ interface TextProps extends HTMLAttributes<HTMLElement> {
   h3?: boolean;
   h4?: boolean;
   caption?: boolean;
+  className?: string;
 }
 
 const Text: React.FC<TextProps> = ({
@@ -23,7 +25,8 @@ const Text: React.FC<TextProps> = ({
   h3,
   h4,
   caption,
-  style
+  style,
+  className,
 }) => {
   let styleOverride = style;
 
@@ -31,41 +34,41 @@ const Text: React.FC<TextProps> = ({
 
   if (h1)
     return (
-      <h1 style={styleOverride} className={classes.h1}>
+      <h1 style={styleOverride} className={cx(classes.h1, className)}>
         {children}
       </h1>
     );
 
   if (h2)
     return (
-      <h2 style={styleOverride} className={classes.h2}>
+      <h2 style={styleOverride} className={cx(classes.h2, className)}>
         {children}
       </h2>
     );
 
   if (h3)
     return (
-      <h3 style={styleOverride} className={classes.h3}>
+      <h3 style={styleOverride} className={cx(classes.h3, className)}>
         {children}
       </h3>
     );
 
   if (h4)
     return (
-      <h4 style={styleOverride} className={classes.h4}>
+      <h4 style={styleOverride} className={cx(classes.h4, className)}>
         {children}
       </h4>
     );
 
   if (caption)
     return (
-      <span style={styleOverride} className={classes.caption}>
+      <span style={styleOverride} className={cx(classes.caption, className)}>
         {children}
       </span>
     );
 
   return (
-    <p style={styleOverride} className={classes.p}>
+    <p style={styleOverride} className={cx(classes.p, className)}>
       {children}
     </p>
   );
