@@ -9,7 +9,7 @@ import WebSockets from '../../services/WebSockets';
 import header from '../../images/header.svg';
 import { Text, Button, Input, Modal } from '../../components';
 import { Classes } from './styles';
-import { User, Location } from '../../types/constants';
+import { User, City } from '../../types/constants';
 import SearchCities from './components/SearchCities';
 
 interface IHomeProps extends RouteComponentProps {
@@ -22,7 +22,7 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [username, setUsername] = useState('')
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [selectedCity, setSelectedCity] = useState<Location | null>(null)
+  const [selectedCity, setSelectedCity] = useState<City | null>(null)
   const [disabledInput, setDisabledInput] = useState(-1)
   const [creatingRoom, setCreatingRoom] = useState(false)
   const [roomId, setRoomId] = useState<null | string>(null)
@@ -95,7 +95,13 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
             joinVotePanelOpen && (
               <div className={classes.joinVotePanel}>
                 <Text bold>Enter an ID or URL below to start voting.</Text>
-                <Input autoFocus value={joinRoomInput} onChange={e => setJoinRoomInput(e.target.value)} placeholder="Enter an ID or URL" />
+                <Input
+                  autoFocus
+                  value={joinRoomInput}
+                  onChange={e => setJoinRoomInput(e.target.value)}
+                  placeholder="Enter an ID or URL"
+                  onEnterPressed={joinExistingVote}
+                />
                 <Button onClick={joinExistingVote} icon={<Star />}>Start Voting</Button>
               </div>
             )

@@ -4,19 +4,19 @@ import cx from 'classnames';
 import { Search } from 'react-feather';
 
 import { Text, Input } from '../../../../components';
-import { Location } from '../../../../types/constants';
+import { City } from '../../../../types/constants';
 import { Classes } from './styles';
 import Zomato from '../../../../services/Zomato';
 
 interface SearchCitiesProps {
-  onCitySelected: (arg0: Location) => void;
+  onCitySelected: (arg0: City) => void;
   inputRef?: RefObject<HTMLInputElement>;
   classes: Classes;
 }
 
 const SearchCities: FC<SearchCitiesProps> = ({ onCitySelected = () => {}, inputRef, classes = {} }) => {
   const [query, setQuery] = useState('')
-  const [suggestedCities, setSuggestedCities] = useState<Location[]>([]);
+  const [suggestedCities, setSuggestedCities] = useState<City[]>([]);
   const searchCities = async () => {
     const results = await Zomato.searchCities(query)
 
@@ -40,7 +40,7 @@ const SearchCities: FC<SearchCitiesProps> = ({ onCitySelected = () => {}, inputR
       onSuggestionsFetchRequested={searchCities}
       focusInputOnSuggestionClick={false}
       onSuggestionsClearRequested={() => setSuggestedCities([])}
-      renderSuggestion={(s: Location, { isHighlighted }) => s && (
+      renderSuggestion={(s: City, { isHighlighted }) => s && (
         <Text
           bold
           className={cx(classes.suggestion, {

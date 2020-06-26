@@ -6,7 +6,7 @@ export type User = {
   room?: Room;
 }
 
-export type Location = {
+export type City = {
   id: number;
   name: string;
   area: string;
@@ -14,5 +14,5 @@ export type Location = {
 
 export type Room = {
   id: string;
-  location: Location;
+  city: City;
 }

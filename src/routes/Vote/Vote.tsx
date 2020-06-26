@@ -50,7 +50,7 @@ class Vote extends Component<VoteProps, VoteState> {
       <main className={classes.root}>
         <Modal closeButton={false} isOpen={!user || !user.username} className={classes.modal}>
           <Text h3>Hello!</Text>
-          <Text>You've joined a vote for a place to eat in <b>{user?.room?.location?.name}</b>.</Text>
+          <Text>You've joined a vote for a place to eat in <b>{user?.room?.city?.name}</b>.</Text>
           <Text>Start by entering a username and selecting <b>up to three</b> of your favourite restaurants.</Text>
           <Text>Hit the "I'm ready" button once you've finished your selection!</Text>
           <div style={{ display: 'flex', flexDirection: 'column', marginTop: 16 }}>

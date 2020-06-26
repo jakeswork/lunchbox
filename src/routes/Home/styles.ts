@@ -36,7 +36,6 @@ export default (theme: Theme) => ({
     paddingTop: 24,
     height: 360,
     display: 'flex',
-    alignItems: 'space-around',
     flexDirection: 'column',
   },
   nextButton: {
