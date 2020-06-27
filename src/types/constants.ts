@@ -16,3 +16,8 @@ export type Room = {
   id: string;
   city: City;
 }
+
+export type Cuisine = {
+  id: number;
+  name: string;
+}

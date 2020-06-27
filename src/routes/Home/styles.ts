@@ -8,13 +8,13 @@ export default (theme: Theme) => ({
     height: '100vh'
   },
   headingImg: {
-    maxWidth: 360,
+    maxWidth: 420,
     marginRight: 32
   },
   buttonsContainer: {
     display: 'flex',
     flexDirection: 'column',
-    marginTop: 72,
+    marginTop: 32,
     position: 'relative',
   },
   dotsWrapper: {

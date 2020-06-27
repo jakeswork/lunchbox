@@ -25,14 +25,14 @@ const colorGreen = "#4caf50";
 const colorBlue = "#2196f3";
 const colorAmber = "#ff9800";
 const theme: Theme = {
-  fontFamily: `"Karla",-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol`,
-  colorPrimary: "#008489",
+  fontFamily: `"Apercu",-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol`,
+  colorPrimary: "#00B0FF",
   colorSecondary: "#ff5960",
   colorRed: "#f44336",
   colorGreen,
   colorBlue,
   colorAmber,
-  colorGrey: "#ebebeb",
+  colorGrey: "#e6e6e6",
   textPrimary: "#484848",
   textSecondary: "#906e62",
   media: {

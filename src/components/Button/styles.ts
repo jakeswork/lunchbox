@@ -6,6 +6,7 @@ import { ButtonProps } from "./Button";
 
 const defaultStyles = (theme: Theme) => ({
   display: "inline-block",
+  userSelect: "none",
   textDecoration: "none",
   textAlign: "center",
   position: "relative",

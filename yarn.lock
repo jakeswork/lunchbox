@@ -2187,6 +2187,11 @@ anymatch@~3.1.1:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
+apercu-font@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/apercu-font/-/apercu-font-1.0.0.tgz#30063e6b0de22ba09658905fe62d1f2913e074a5"
+  integrity sha512-rrFhUT2U9aP2IJQcBd6Gj7oLd/ADi2mLKUCdQYMYN5xgI121IhvcWEKDeJABwT4+aanS6kEQ583l1vE/2hDQqA==
+
 aproba@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/aproba/-/aproba-1.2.0.tgz#6802e6264efd18c790a1b0d517f0f2627bf2c94a"

@@ -1,4 +1,4 @@
-import { City } from '../types/constants';
+import { City, Cuisine } from '../types/constants';
 
 const serverUrl = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localhost:5000'
 
@@ -21,12 +21,20 @@ class Zomato {
     }
   }
 
-  static async searchCities (query: string): Promise<Array<City> | null> {
+  static async searchCities (query: string): Promise<City[]> {
     const response = await Zomato.get('/api/v1/cities', {
       searchQuery: query
     })
 
-    if (!response) return null
+    if (!response) return []
+
+    return response.json()
+  }
+
+  static async getCuisinesByCityId (cityId: string): Promise<Cuisine[]> {
+    const response = await Zomato.get('/api/v1/cuisines', { cityId })
+
+    if (!response) return []
 
     return response.json()
   }

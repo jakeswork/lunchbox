@@ -9,8 +9,9 @@ import WebSockets from '../../services/WebSockets';
 import header from '../../images/header.svg';
 import { Text, Button, Input, Modal } from '../../components';
 import { Classes } from './styles';
-import { User, City } from '../../types/constants';
+import { User, City, Cuisine } from '../../types/constants';
 import SearchCities from './components/SearchCities';
+import CuisineSelector from './components/CuisineSelector';
 
 interface IHomeProps extends RouteComponentProps {
   classes: Classes
@@ -23,6 +24,7 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
   const [username, setUsername] = useState('')
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedCity, setSelectedCity] = useState<City | null>(null)
+  const [selectedCuisines, setSelectedCuisines] = useState<Cuisine[]>([])
   const [disabledInput, setDisabledInput] = useState(-1)
   const [creatingRoom, setCreatingRoom] = useState(false)
   const [roomId, setRoomId] = useState<null | string>(null)
@@ -72,8 +74,8 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
     <main className={classes.main}>
       <img src={header} alt="Man sitting on chef's hat" className={classes.headingImg} />
       <div>
-        <Text h1 primaryColor>Lunchbox <span role="img" aria-label="Takeout Box">🥡</span></Text>
-        <Text h4>Find the perfect place to eat.</Text>
+        <Text h1 primaryColor>Appetite</Text>
+        <Text h4>Vote for the next place to eat from<br/> thousands of local restaurants.</Text>
         <div className={classes.buttonsContainer}>
           <Button
             onClick={() => {
@@ -121,8 +123,8 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
           onChangeIndex={(index: number) => setCurrentSlide(index)}
         >
           <div className={classes.slide}>
-            <Text h4>Hello!</Text>
-            <Text style={{ marginBottom: 16 }}>Firstly, what name should we call you?</Text>
+            <Text h4>Hey! <span role="img" aria-label="waving hand">👋</span></Text>
+            <Text style={{ marginBottom: 16 }}>What name should we call you?</Text>
             <div>
               <Input
                 autoFocus
@@ -140,12 +142,12 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
                 icon={<ArrowRight />}
                 onClick={setUserAndTransition}
               >
-                Next
+                Select City
               </Button>
             </div>
           </div>
           <div className={classes.slide}>
-            <Text h4>Thanks, {user.username}!</Text>
+            <Text h4>Thanks, {user.username}! <span role="img" aria-label="thumbs up">👍</span></Text>
             <Text style={{ marginBottom: 16 }}>Where are we eating today?</Text>
             <SearchCities
               onCitySelected={setSelectedCity}
@@ -153,16 +155,37 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
             />
             <Button
               className={classes.nextButton}
-              icon={<Star />}
-              onClick={createRoom}
-              loading={creatingRoom}
+              icon={<ArrowRight />}
+              onClick={() => setCurrentSlide(currentSlide + 1)}
               disabled={!selectedCity || currentSlide !== 1}
             >
-              Open Vote
+              Select Cuisines
             </Button>
           </div>
           <div className={classes.slide}>
-            <Text h4>We're all set</Text>
+            <Text h4>Picky eaters? <span role="img" aria-label="face savoring food">😋</span></Text>
+            <Text>If you would like to remove any cuisines from the vote, you can do so now by opening the cuisine editor.</Text>
+            <Text>Otherwise, you may start voting!</Text>
+            {
+              selectedCity && (
+                <CuisineSelector
+                  cityId={selectedCity.id}
+                  onCuisinesSelected={cuisines => setSelectedCuisines(cuisines)}
+                />
+              )
+            }
+            <Button
+              className={classes.nextButton}
+              icon={<Star />}
+              onClick={createRoom}
+              loading={creatingRoom}
+              disabled={!selectedCity || currentSlide !== 2}
+            >
+              Start Voting
+            </Button>
+          </div>
+          <div className={classes.slide}>
+            <Text h4>Let's eat! <span role="img" aria-label="rocket">🚀</span></Text>
             <Text style={{ marginBottom: 16 }}>
               You can invite people to join your vote for a place to eat in <b>{selectedCity?.name}</b> using the link below:
             </Text>
@@ -192,6 +215,7 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
           <Dot />
           <Dot i={1} />
           <Dot i={2} />
+          <Dot i={3} />
         </div>
       </Modal>
     </main>
