@@ -33,7 +33,6 @@ export default (theme: Theme) => ({
     backgroundColor: theme.colorPrimary
   },
   slide: {
-    paddingTop: 24,
     height: 360,
     display: 'flex',
     flexDirection: 'column',
@@ -61,7 +60,7 @@ export default (theme: Theme) => ({
   joinVotePanel: {
     padding: 16,
     position: 'absolute',
-    bottom: -192,
+    bottom: -208,
     right: 0,
     left: 0,
     borderRadius: 4,

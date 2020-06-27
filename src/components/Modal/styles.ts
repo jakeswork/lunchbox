@@ -20,9 +20,13 @@ export default (theme: Theme) => ({
     right: 8,
     cursor: 'pointer',
   },
+  title: {
+    marginBottom: 24,
+  }
 })
 
 export type Classes = {
   modal: string;
-  closeModal:string;
+  closeModal: string;
+  title: string;
 }

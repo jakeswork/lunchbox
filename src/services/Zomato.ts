@@ -1,9 +1,19 @@
-import { City, Cuisine } from '../types/constants';
+import { City, Cuisine, Restaurant } from '../types/constants';
 
 const serverUrl = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localhost:5000'
 
 interface SearchParams {
   [k: string]: string
+}
+
+interface RestaurantMetaData {
+  totalResults: number;
+  resultsShown: number;
+}
+
+interface RestaurantListWithMetaData {
+  metadata: RestaurantMetaData;
+  restaurants: Restaurant[];
 }
 
 class Zomato {
@@ -35,6 +45,14 @@ class Zomato {
     const response = await Zomato.get('/api/v1/cuisines', { cityId })
 
     if (!response) return []
+
+    return response.json()
+  }
+
+  static async getRestaurantsByCityId (cityId: string, cuisines: number[]): Promise<RestaurantListWithMetaData | null> {
+    const response = await Zomato.get('/api/v1/restaurants/city', { cityId, cuisines: cuisines.join() })
+
+    if (!response) return null
 
     return response.json()
   }

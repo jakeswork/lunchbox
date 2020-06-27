@@ -9,13 +9,14 @@ import WebSockets from '../../services/WebSockets';
 import header from '../../images/header.svg';
 import { Text, Button, Input, Modal } from '../../components';
 import { Classes } from './styles';
-import { User, City, Cuisine } from '../../types/constants';
+import { User, City } from '../../types/constants';
 import SearchCities from './components/SearchCities';
 import CuisineSelector from './components/CuisineSelector';
+import { OptionalUserPayload } from '../../reducers/user/types';
 
 interface IHomeProps extends RouteComponentProps {
   classes: Classes
-  setUser: (arg0: User) => void;
+  setUser: (arg0: OptionalUserPayload) => void;
   user: User;
 }
 
@@ -24,10 +25,8 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
   const [username, setUsername] = useState('')
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedCity, setSelectedCity] = useState<City | null>(null)
-  const [selectedCuisines, setSelectedCuisines] = useState<Cuisine[]>([])
+  const [selectedCuisines, setSelectedCuisines] = useState<number[]>([])
   const [disabledInput, setDisabledInput] = useState(-1)
-  const [creatingRoom, setCreatingRoom] = useState(false)
-  const [roomId, setRoomId] = useState<null | string>(null)
   const [urlCopied, setUrlCopied] = useState(false);
   const [joinVotePanelOpen, setJoinVotePanelOpen] = useState(false);
   const [joinRoomInput, setJoinRoomInput] = useState('')
@@ -39,23 +38,20 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
   const setUserAndTransition = () => {
     if (username.length > 0) {
       setUser({ username })
+
       citySearchInput?.current?.focus()
     }
   }
 
   const createRoom = async () => {
-    if (!selectedCity || !user.username) return null;
-
-    setCreatingRoom(true)
+    if (!selectedCity || !user.username || !selectedCuisines) return null;
 
     try {
-      const roomId = await WebSockets.createRoom(user.username, selectedCity)
-
-      setCreatingRoom(false);
+      const newUser = await WebSockets.createRoom(user.username, selectedCity, selectedCuisines)
 
       setCurrentSlide(currentSlide + 1);
 
-      return setRoomId(roomId)
+      return setUser(newUser)
     } catch (error) {
       console.error(error)
     }
@@ -75,7 +71,7 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
       <img src={header} alt="Man sitting on chef's hat" className={classes.headingImg} />
       <div>
         <Text h1 primaryColor>Appetite</Text>
-        <Text h4>Vote for the next place to eat from<br/> thousands of local restaurants.</Text>
+        <Text h4>Vote for the next place to eat <br/>from over thousands of local<br/>restaurants and cuisines.</Text>
         <div className={classes.buttonsContainer}>
           <Button
             onClick={() => {
@@ -113,9 +109,8 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={() => setModalIsOpen(false)}
+        title="Start a vote"
       >
-        <Text h3>Start a vote</Text>
-        <Text>Follow the instructions below to open your vote.</Text>
         <SwipeableViews
           onTransitionEnd={() => setDisabledInput(currentSlide - 1)}
           disabled
@@ -124,7 +119,7 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
         >
           <div className={classes.slide}>
             <Text h4>Hey! <span role="img" aria-label="waving hand">👋</span></Text>
-            <Text style={{ marginBottom: 16 }}>What name should we call you?</Text>
+            <Text style={{ marginBottom: 16 }}>Firstly, let us know what we should call you:</Text>
             <div>
               <Input
                 autoFocus
@@ -178,7 +173,6 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
               className={classes.nextButton}
               icon={<Star />}
               onClick={createRoom}
-              loading={creatingRoom}
               disabled={!selectedCity || currentSlide !== 2}
             >
               Start Voting
@@ -190,25 +184,25 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
               You can invite people to join your vote for a place to eat in <b>{selectedCity?.name}</b> using the link below:
             </Text>
             <Link
-              to={`vote/${roomId}`}
+              to={`vote/${user.room.id}`}
               rel="noopener noreferrer"
               className={classes.link}
             >
-              {`${window.location.href}vote/${roomId}`}
+              {`${window.location.href}vote/${user.room.id}`}
             </Link>
+            <CopyToClipboard text={`${window.location.href}vote/${user.room.id}`} onCopy={() => setUrlCopied(true)}>
+              <Button success={urlCopied} secondary icon={urlCopied ? <Check /> : <Clipboard />}>
+                Copy Link
+              </Button>
+            </CopyToClipboard>
             <Link
-              to={`vote/${roomId}`}
+              to={`vote/${user.room.id}`}
               rel="noopener noreferrer"
             >
               <Button style={{ width: '100%' }} icon={<LogIn />}>
                 Join Vote
               </Button>
             </Link>
-            <CopyToClipboard text={`${window.location.href}vote/${roomId}`} onCopy={() => setUrlCopied(true)}>
-              <Button success={urlCopied} secondary icon={urlCopied ? <Check /> : <Clipboard />}>
-                Copy to clipboard
-              </Button>
-            </CopyToClipboard>
           </div>
         </SwipeableViews>
         <div className={classes.dotsWrapper}>

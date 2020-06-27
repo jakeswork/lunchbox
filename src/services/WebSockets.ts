@@ -27,23 +27,33 @@ class WebSockets {
     this.socket.emit('chatMessage', message)
   }
 
-  createRoom (username: string, city: City): Promise<string> {
+  createRoom (username: string, city: City, cuisines: number[]): Promise<User> {
     return new Promise((res, rej) => {
-      this.socket.emit('createRoom', username, city)
+      this.socket.emit('createRoom', username, city, cuisines)
 
-      this.socket.on('successfulCreate', (roomId: string) => res(roomId))
+      this.socket.on('successfulCreate', (user: User) => res(user))
 
       this.socket.on('createRoomError', (message: string) => rej(message))
     })
   }
 
-  joinRoom (roomId: string): Promise<Room> {
+  joinRoom (roomId: string): Promise<User> {
     return new Promise((res, rej) => {
       this.socket.emit('joinRoom', roomId)
 
-      this.socket.on('successfulJoin', (room: Room) => res(room))
+      this.socket.on('successfulJoin', (user: User) => res(user))
 
       this.socket.on('joinRoomError', (message: string) => rej(message))
+    })
+  }
+
+  setUsername (username: string): Promise<User> {
+    return new Promise((res, rej) => {
+      this.socket.emit('setUsername', username);
+
+      this.socket.on('successfulSetUsername', (user: User) => res(user))
+
+      this.socket.on('setUsernameError', (message: string) => rej(message))
     })
   }
 }

@@ -3,7 +3,14 @@ import { SET_USER, UserActionTypes, DELETE_USER, UPDATE_USER, SET_USER_ROOM } fr
 const defaultState = {
   username: '',
   id: '',
-  room: '',
+  room: {
+    id: '',
+    city: {
+      id: '',
+      name: ''
+    },
+    cuisines: []
+  },
 };
 
 export default (state = defaultState, action: UserActionTypes) => {

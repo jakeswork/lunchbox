@@ -10,7 +10,7 @@ import Zomato from '../../../../services/Zomato';
 interface CuisineSelectorProps {
   classes: Classes;
   cityId: number;
-  onCuisinesSelected: (cuisines: Cuisine[]) => void
+  onCuisinesSelected: (cuisineIds: number[]) => void
 }
 
 const CuisineSelector: FC<CuisineSelectorProps> = ({ classes = {}, cityId, onCuisinesSelected }) => {
@@ -39,7 +39,9 @@ const CuisineSelector: FC<CuisineSelectorProps> = ({ classes = {}, cityId, onCui
       newSelection.push(id)
     }
 
-    return setSelectedCuisines(newSelection)
+    setSelectedCuisines(newSelection)
+
+    return onCuisinesSelected(newSelection)
   }
 
   return (
@@ -47,6 +49,12 @@ const CuisineSelector: FC<CuisineSelectorProps> = ({ classes = {}, cityId, onCui
       {
         selectorIsOpen ? (
           <div className={classes.root}>
+            <Text
+              caption
+              style={{ marginBottom: 16, display: 'block', textAlign: 'start' }}
+            >
+              Click a cuisine below to adjust your voters options.
+            </Text>
             {
               cuisineLibrary.map((cuisine) => (
                 <div

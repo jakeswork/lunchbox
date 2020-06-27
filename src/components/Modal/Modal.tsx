@@ -4,19 +4,28 @@ import { X } from 'react-feather';
 import cx from 'classnames';
 
 import { Classes } from './styles';
+import { Text } from '../';
 
 interface ModalProps {
   classes: Classes
   closeButton?: boolean;
+  title?: string;
 }
 
 ReactModal.setAppElement('#root')
 
-const Modal: FC<ReactModal.Props & ModalProps> = ({ classes = {}, className, children, closeButton = true, ...props }) => (
+const Modal: FC<ReactModal.Props & ModalProps> = ({
+  classes = {},
+  className,
+  children,
+  closeButton = true,
+  title,
+  ...props
+}) => (
   <ReactModal
     className={cx(classes.modal, className)}
     closeTimeoutMS={200}
-    contentLabel="Modal"
+    contentLabel={title || 'modal'}
     style={{
       overlay: {
         display: 'flex',
@@ -27,6 +36,7 @@ const Modal: FC<ReactModal.Props & ModalProps> = ({ classes = {}, className, chi
     {...props}
   >
     {closeButton && <X className={classes.closeModal} onClick={props.onRequestClose} />}
+    { title && <Text primaryColor className={classes.title} h3>{title}</Text>}
     {children}
   </ReactModal>
 )

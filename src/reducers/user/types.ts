@@ -1,13 +1,19 @@
-import { User, Room } from '../../types/constants';
+import { Room } from '../../types/constants';
 
 export const SET_USER = 'SET_USER'
 export const DELETE_USER = 'DELETE_USER'
 export const UPDATE_USER = 'UPDATE_USER'
 export const SET_USER_ROOM = 'SET_USER_ROOM'
 
+export type OptionalUserPayload = {
+  id?: string;
+  username?: string;
+  room?: Room;
+}
+
 export interface SetUserAction {
   type: typeof SET_USER
-  payload: User
+  payload: OptionalUserPayload
 }
 
 export interface DeleteUserAction {
@@ -16,7 +22,7 @@ export interface DeleteUserAction {
 
 export interface UpdateUserAction {
   type: typeof UPDATE_USER;
-  payload: User 
+  payload: OptionalUserPayload; 
 };
 
 export interface SetUserRoomAction {

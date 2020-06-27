@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet";
 import { ThemeProvider } from 'react-jss';
 import { Provider } from 'react-redux';
 import 'normalize.css';
-import 'typeface-karla';
+import 'apercu-font';
 
 import * as serviceWorker from './serviceWorker';
 import routes from "./routes";
