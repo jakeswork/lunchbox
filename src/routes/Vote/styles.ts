@@ -1,3 +1,5 @@
+import { Theme } from "../../utils/theme";
+
 const column = (size: number) => ({
   margin: 8,
   padding: 16,
@@ -8,10 +10,11 @@ const column = (size: number) => ({
   flexDirection: 'column',
 })
 
-export default {
+export default (theme: Theme) => ({
   root: {
     display: 'flex',
     padding: '64px 32px',
+    background: theme.colorWhite,
   },
   colSm: column(25),
   colMd: column(50),
@@ -20,7 +23,7 @@ export default {
   modal: {
     height: 'auto'
   },
-};
+});
 
 export type Classes = {
   root: string;

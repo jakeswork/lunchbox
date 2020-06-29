@@ -49,8 +49,16 @@ class Zomato {
     return response.json()
   }
 
-  static async getRestaurantsByCityId (cityId: string, cuisines: number[]): Promise<RestaurantListWithMetaData | null> {
-    const response = await Zomato.get('/api/v1/restaurants/city', { cityId, cuisines: cuisines.join() })
+  static async getRestaurants (cityId: string, cuisines?: number[], query?: string): Promise<RestaurantListWithMetaData | null> {
+    const params: SearchParams = {
+      cityId,
+    };
+
+    if (cuisines) params.cuisines = cuisines.toString();
+
+    if (query) params.searchQuery = query;
+
+    const response = await Zomato.get('/api/v1/restaurants/search', params)
 
     if (!response) return null
 

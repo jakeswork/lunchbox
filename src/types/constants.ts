@@ -43,4 +43,5 @@ export type Restaurant = {
   takeawayOpen?: boolean;
   totalReviews?: number;
   averageRating?: number;
+  photosUrl?: string;
 }

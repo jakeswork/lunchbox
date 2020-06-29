@@ -84,21 +84,19 @@ const Vote: FC<VoteProps> = ({
       <Text
         style={{
           position: 'absolute',
-          top: 16,
-          left: 16,
+          top: 24,
+          left: 24,
           userSelect: 'none',
         }}
         h4
-        bold
         primaryColor
       >
         Appetite
       </Text>
       <div className={classes.colSm}>
-        <Text bold>Select up to three of your favourite restaurants.</Text>
       </div>
       <div className={classes.colMd}>
-        <SearchRestaurants />
+        {user && user.username && user.username.length && <SearchRestaurants />}
       </div>
     </main>
   )
