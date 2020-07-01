@@ -21,8 +21,6 @@ class Zomato {
   static async get (endpoint: string, params: SearchParams): Promise<Response | null | undefined> {
     const url = new URL(`${serverUrl}${endpoint}`);
 
-    console.log(params)
-
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
 
     try {
