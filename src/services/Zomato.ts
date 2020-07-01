@@ -8,10 +8,11 @@ interface SearchParams {
 
 interface RestaurantMetaData {
   totalResults: number;
-  resultsShown: number;
+  hasMoreResults: boolean;
+  nextPageStart: number;
 }
 
-interface RestaurantListWithMetaData {
+export interface RestaurantListWithMetaData {
   metadata: RestaurantMetaData;
   restaurants: Restaurant[];
 }
@@ -19,6 +20,8 @@ interface RestaurantListWithMetaData {
 class Zomato {
   static async get (endpoint: string, params: SearchParams): Promise<Response | null | undefined> {
     const url = new URL(`${serverUrl}${endpoint}`);
+
+    console.log(params)
 
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
 
@@ -49,7 +52,12 @@ class Zomato {
     return response.json()
   }
 
-  static async getRestaurants (cityId: string, cuisines?: number[], query?: string): Promise<RestaurantListWithMetaData | null> {
+  static async getRestaurants (
+    cityId: string,
+    cuisines?: number[],
+    query?: string,
+    paginationStart?: number,
+  ): Promise<RestaurantListWithMetaData | null> {
     const params: SearchParams = {
       cityId,
     };
@@ -57,6 +65,8 @@ class Zomato {
     if (cuisines) params.cuisines = cuisines.toString();
 
     if (query) params.searchQuery = query;
+
+    if (paginationStart) params.paginationStart = paginationStart.toString();
 
     const response = await Zomato.get('/api/v1/restaurants/search', params)
 

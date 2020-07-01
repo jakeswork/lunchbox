@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Helmet } from "react-helmet";
@@ -11,31 +11,29 @@ import theme from './utils/theme';
 import store from './reducers';
 
 render(
-  <StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            {routes.map(({ path, Component, title }) => (
-              <Route
-                key={path}
-                path={path}
-                exact
-                render={() => (
-                  <>
-                    <Helmet>
-                      <title>{title}</title>
-                    </Helmet>
-                    <Component />
-                  </>
-                )}
-              />
-            ))}
-          </Switch>
-        </Router>
-      </ThemeProvider>
-    </Provider>
-  </StrictMode>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <Switch>
+          {routes.map(({ path, Component, title }) => (
+            <Route
+              key={path}
+              path={path}
+              exact
+              render={() => (
+                <>
+                  <Helmet>
+                    <title>{title}</title>
+                  </Helmet>
+                  <Component />
+                </>
+              )}
+            />
+          ))}
+        </Switch>
+      </Router>
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 );
 
