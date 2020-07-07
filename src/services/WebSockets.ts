@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-import { Room, City, User } from '../types/constants';
+import { City, User, Restaurant } from '../types/constants';
 
 const serverUrl = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localhost:5000'
 
@@ -10,13 +10,12 @@ interface WebSockets {
 
 export type RoomUsers = {
   count: number;
-  room: Room;
   users: User[];
 }
 
 class WebSockets {
   constructor () {
-    this.socket = io(serverUrl)
+    this.socket = io(serverUrl, { transports: ['websocket'], forceNew: true })
   }
 
   onRoomUsersUpdate (fn: (updatedRoom: RoomUsers) => any): void {
@@ -33,7 +32,7 @@ class WebSockets {
 
       this.socket.on('successfulCreate', (user: User) => res(user))
 
-      this.socket.on('createRoomError', (message: string) => rej(message))
+      this.socket.on('createRoomError', (message: string) => rej(new Error(message)))
     })
   }
 
@@ -43,7 +42,7 @@ class WebSockets {
 
       this.socket.on('successfulJoin', (user: User) => res(user))
 
-      this.socket.on('joinRoomError', (message: string) => rej(message))
+      this.socket.on('joinRoomError', (message: string) => rej(new Error(message)))
     })
   }
 
@@ -53,7 +52,25 @@ class WebSockets {
 
       this.socket.on('successfulSetUsername', (user: User) => res(user))
 
-      this.socket.on('setUsernameError', (message: string) => rej(message))
+      this.socket.on('setUsernameError', (message: string) => rej(new Error(message)))
+    })
+  }
+
+  updateSelection (restaurant: Restaurant): Promise<User> {
+    return new Promise((res, rej) => {
+      this.socket.emit('updateSelection', restaurant)
+
+      this.socket.on('successfulUpdateSelection', (user: User) => res(user))
+
+      this.socket.on('updateSelectionError', (message: string) => rej(new Error(message)))
+    })
+  }
+
+  confirmSelection (): Promise<User> {
+    return new Promise((res, rej) => {
+      this.socket.emit('confirmSelection')
+
+      this.socket.on('successfulConfirmSelection', (user: User) => res(user))
     })
   }
 }

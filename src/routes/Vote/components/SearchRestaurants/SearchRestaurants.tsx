@@ -3,24 +3,28 @@ import { Search } from 'react-feather';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import Zomato, { RestaurantListWithMetaData } from '../../../../services/Zomato';
-import { User } from '../../../../types/constants';
+import WebSockets from '../../../../services/WebSockets';
+import { User, Restaurant } from '../../../../types/constants';
 import { Input } from '../../../../components';
+import { emit } from '../../../../components/Toast';
 import { Classes } from './styles';
 import RestaurantCard from './components/RestaurantCard';
 import LoadingCard from './components/LoadingCard';
+import { OptionalUserPayload } from '../../../../reducers/user/types';
 
 interface SearchRestaurantsProps {
   user: User;
   classes: Classes;
+  setUser: (arg0: OptionalUserPayload) => void
 }
 
-const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {} }) => {
+const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {}, setUser = () => {} }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(true);
   const [restaurantCatalogue, setRestaurantCatalogue] = useState<RestaurantListWithMetaData | null>(null)
 
   useEffect(() => {
-    async function fetchData () {
+    async function getRestaurants () {
       const { room: { city: { id }, cuisines } } = user;
       const response = await Zomato.getRestaurants(id.toString(), cuisines)
 
@@ -31,7 +35,7 @@ const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {} }) =
       return setIsLoading(false)
     }
 
-    if (user && user.room) fetchData()
+    if (user && user.room) getRestaurants()
   }, [user])
 
   const searchRestaurants = async () => {
@@ -46,6 +50,18 @@ const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {} }) =
     if (!response) return null;
 
     return setRestaurantCatalogue(response)
+  }
+
+  const onSelectRestaurant = async (restaurant: Restaurant) => {
+    try {
+      const updatedUser = await WebSockets.updateSelection(restaurant)
+
+      return setUser(updatedUser)
+    } catch (error) {
+      console.error(error)
+
+      emit(error.message)
+    }
   }
 
   const paginate = async () => {
@@ -87,7 +103,7 @@ const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {} }) =
           searchQuery.length > 3 && searchRestaurants()
         }}
       />
-      <div className={classes.container}>
+      <div className={classes.container} id="container">
         {
           isLoading ? (
             <>
@@ -101,8 +117,16 @@ const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {} }) =
               next={paginate}
               hasMore={restaurantCatalogue ? restaurantCatalogue.metadata.hasMoreResults : false}
               loader={<LoadingCard />}
+              scrollableTarget="container"
             >
-              { restaurantCatalogue && restaurantCatalogue.restaurants.map(r => <RestaurantCard key={r.id} restaurant={r} />)}
+              { restaurantCatalogue && restaurantCatalogue.restaurants.map(r => (
+                <RestaurantCard
+                  key={r.id}
+                  restaurant={r}
+                  onSelect={() => onSelectRestaurant(r)}
+                  selected={user.vote.selection.findIndex(restaurant => restaurant.id === r.id) > -1}
+                />
+              ))}
             </InfiniteScroll>
           )
         }

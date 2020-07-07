@@ -4,20 +4,17 @@ export default (theme: Theme) => ({
   restaurantCard: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '32px 0',
+    margin: 32,
     padding: 24,
-    border: `1px solid ${theme.colorGrey}`,
-    background: 'white',
-    borderRadius: 4
   },
   imageWrapper: {
-    width: 'calc(35% - 16px)',
+    width: 'calc(40% - 16px)',
     marginRight: 24
   },
   restaurantImg: {
     height: 'calc(100% - 136px)',
     backgroundSize: 'cover',
-    borderRadius: 4,
+    borderRadius: 8,
     marginBottom: 8,
     backgroundColor: theme.colorGrey,
     display: 'flex',
@@ -31,7 +28,7 @@ export default (theme: Theme) => ({
     flexDirection: 'column'
   },
   infoWrapper: {
-    width: '65%'
+    width: '60%'
   },
   inlineText: {
     display: 'inline',

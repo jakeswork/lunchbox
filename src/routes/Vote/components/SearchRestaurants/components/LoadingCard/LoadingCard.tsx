@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import ContentLoader from 'react-content-loader';
 
 import { Classes } from './styles';
+import { Card } from '../../../../../../components'
 
 interface LoadingCardProps {
   classes: Classes
@@ -16,7 +17,7 @@ const LoadingCard: FC<LoadingCardProps> = ({ classes = {} }) => {
   }
 
   return (
-    <div className={classes.restaurantCard}>
+    <Card className={classes.restaurantCard}>
       <ContentLoader height={260} width={600}>
         <rect x="0" y="0" rx="4" ry="4" width="225" height="136" />
         <rect x="0" y="150" rx="4" ry="4" width="225" height="46" />
@@ -32,7 +33,7 @@ const LoadingCard: FC<LoadingCardProps> = ({ classes = {} }) => {
         <rect x="248" y="208" rx="1" ry="1" width={num()} height="20" />
         <rect x="248" y="236" rx="1" ry="1" width={num()} height="20" />
       </ContentLoader>
-    </div>
+    </Card>
   )
 }
 

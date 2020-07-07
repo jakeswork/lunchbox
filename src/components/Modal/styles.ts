@@ -9,7 +9,7 @@ export default (theme: Theme) => ({
     background: 'white',
     position: 'relative',
     border: `1px solid ${theme.colorGrey}`,
-    borderRadius: 4,
+    borderRadius: 8,
     '&:focus': {
       outlineColor: theme.colorPrimary
     }

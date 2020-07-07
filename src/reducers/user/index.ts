@@ -11,6 +11,10 @@ const defaultState = {
     },
     cuisines: []
   },
+  vote: {
+    hasConfirmedSelection: false,
+    selection: []
+  }
 };
 
 export default (state = defaultState, action: UserActionTypes) => {

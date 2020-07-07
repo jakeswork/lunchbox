@@ -48,7 +48,11 @@ const Button: React.FC<ButtonProps> = ({
       ) : (
         children
       )}
-      {(icon && !loading) && React.cloneElement(icon, { className: cx(classes.buttonIcon, icon.props?.className) })}
+      {(icon && !loading) && (
+        <div className={classes.buttonIcon}>
+          { React.cloneElement(icon, { size: 20 }) }
+        </div>
+      )}
       {loading && (
         <div className={classes.buttonIcon}>
           <ClassicSpinner size={16} />

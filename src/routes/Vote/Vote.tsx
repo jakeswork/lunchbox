@@ -7,6 +7,8 @@ import { Classes } from './styles';
 import WebSockets from '../../services/WebSockets';
 import { User } from "../../types/constants";
 import SearchRestaurants from './components/SearchRestaurants';
+import UsersInRoom from './components/UsersInRoom';
+import Selection from './components/Selection';
 import { OptionalUserPayload } from "../../reducers/user/types";
 
 interface MatchParams {
@@ -29,6 +31,7 @@ const Vote: FC<VoteProps> = ({
   classes = {},
 }) => {
   const [username, setUsername] = useState('');
+  const [usernameError, setUsernameError] = useState('');
 
   useEffect(() => {
     async function joinRoom () {
@@ -42,15 +45,24 @@ const Vote: FC<VoteProps> = ({
       }
     }
 
-    if (!user.username || !user.username.length) joinRoom()
-  }, [params, user, history, setUser])
+    if (!user || !user.username) joinRoom()
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const updateUsername = async () => {
-    const updatedUser = await WebSockets.setUsername(username)
+    try {
+      const updatedUser = await WebSockets.setUsername(username)
 
-    if (!updatedUser) return null;
+      if (!updatedUser) return null;
 
-    return updateUser({ username: updatedUser.username })
+      setUsernameError('');
+
+      return updateUser({ username: updatedUser.username })
+    } catch (error) {
+      console.error(error);
+
+      return setUsernameError(error.message);
+    }
   }
 
   return (
@@ -68,12 +80,17 @@ const Vote: FC<VoteProps> = ({
         <div style={{ display: 'flex', flexDirection: 'column', marginTop: 16 }}>
           <Input
             placeholder="Enter a username"
+            autoFocus
+            error={usernameError}
             value={username}
             onEnterPressed={updateUsername}
-            onChange={(e: FormEvent<HTMLInputElement>) => setUsername(e.currentTarget.value)}
+            onChange={(e: FormEvent<HTMLInputElement>) => {
+              setUsernameError('')
+              return setUsername(e.currentTarget.value)
+            }}
           />
           <Button
-            disabled={username.length <= 0}
+            disabled={username.length <= 0 || Boolean(usernameError)}
             onClick={updateUsername}
             icon={<Star />}
           >
@@ -82,18 +99,15 @@ const Vote: FC<VoteProps> = ({
         </div>
       </Modal>
       <Text
-        style={{
-          position: 'absolute',
-          top: 24,
-          left: 24,
-          userSelect: 'none',
-        }}
+        className={classes.logo}
         h4
         primaryColor
       >
         Appetite
       </Text>
       <div className={classes.colSm}>
+        <UsersInRoom />
+        <Selection />
       </div>
       <div className={classes.colMd}>
         {user && user.username && user.username.length && <SearchRestaurants />}

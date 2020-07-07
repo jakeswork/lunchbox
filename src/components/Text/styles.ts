@@ -1,50 +1,60 @@
 import { Theme } from "../../utils/theme";
+import { TextProps } from './Text';
 
-const defaultStyles = (theme: Theme) => ({
+const defaultStyles = (theme: Theme, props: TextProps) => ({
   fontFamily: theme.fontFamily,
   fontWeight: 700,
   margin: 0,
-  marginBottom: 4
+  marginBottom: 4,
+  color: colorFromProps(props, theme)
 });
 
+const colorFromProps = (props: TextProps, theme: Theme): string => {
+  let color = theme.textPrimary;
+
+  if (props.primaryColor) color = theme.colorPrimary;
+
+  if (props.red) color = theme.colorRed;
+
+  if (props.green) color = theme.colorGreen;
+
+  if (props.grey) color = theme.colorGrey;
+
+  return color;
+}
+
 const styles = (theme: Theme) => ({
-  h1: ({ primaryColor = false }) => ({
-    ...defaultStyles(theme),
+  h1: (props: TextProps) => ({
+    ...defaultStyles(theme, props),
     fontSize: 64,
     marginBottom: 8,
-    color: primaryColor ? theme.colorPrimary : theme.textPrimary,
   }),
-  h2: ({ primaryColor = false }) => ({
-    ...defaultStyles(theme),
+  h2: (props: TextProps) => ({
+    ...defaultStyles(theme, props),
     fontSize: 48,
-    color: primaryColor ? theme.colorPrimary : theme.textPrimary,
   }),
-  h3: ({ primaryColor = false }) => ({
-    ...defaultStyles(theme),
+  h3: (props: TextProps) => ({
+    ...defaultStyles(theme, props),
     fontSize: 32,
-    color: primaryColor ? theme.colorPrimary : theme.textPrimary,
   }),
-  h4: ({ primaryColor = false }) => ({
-    ...defaultStyles(theme),
+  h4: (props: TextProps) => ({
+    ...defaultStyles(theme, props),
     fontSize: 24,
     marginBottom: 16,
-    color: primaryColor ? theme.colorPrimary : theme.textPrimary,
   }),
-  caption: ({ primaryColor = false }) => ({
-    ...defaultStyles(theme),
+  caption: (props: TextProps) => ({
+    ...defaultStyles(theme, props),
     wordWrap: "break-word",
     fontSize: 12,
     fontWeight: 800,
     letterSpacing: "0.08333333333333333em",
     textTransform: "uppercase",
-    color: primaryColor ? theme.colorPrimary : theme.textPrimary,
     userSelect: 'none'
   }),
-  p: ({ primaryColor = false }) => ({
-    ...defaultStyles(theme),
+  p: (props: TextProps) => ({
+    ...defaultStyles(theme, props),
     fontSize: 16,
     fontWeight: 400,
-    color: primaryColor ? theme.colorPrimary : theme.textPrimary,
     marginBottom: 8,
   }),
   [theme.media.mobile as any]: {

@@ -3,7 +3,7 @@ import cx from 'classnames';
 
 import { Classes } from "./styles";
 
-interface TextProps extends HTMLAttributes<HTMLElement> {
+export interface TextProps extends HTMLAttributes<HTMLElement> {
   bold?: boolean;
   primaryColor?: boolean;
   classes: Classes;
@@ -14,6 +14,9 @@ interface TextProps extends HTMLAttributes<HTMLElement> {
   h4?: boolean;
   caption?: boolean;
   className?: string;
+  red?: boolean;
+  green?: boolean;
+  grey?: boolean;
 }
 
 const Text: React.FC<TextProps> = ({

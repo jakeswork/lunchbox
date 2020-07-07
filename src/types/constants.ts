@@ -1,9 +1,15 @@
 export type Func<R> = ((data: any) => R)
 
+export type UserVote = {
+  hasConfirmedSelection: boolean;
+  selection: Restaurant[];
+}
+
 export type User = {
   username?: string;
   id: string;
   room: Room;
+  vote: UserVote;
 }
 
 export type City = {

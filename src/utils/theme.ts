@@ -25,7 +25,7 @@ export interface Theme {
   media: ThemeMedia;
 }
 
-const primaryColor = color("#00B0FF", "hex")
+const primaryColor = color("#F9A826", "hex")
 
 const colorGreen = "#4caf50";
 const colorBlue = "#2196f3";

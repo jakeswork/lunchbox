@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { Image, ExternalLink, Heart, MapPin, Phone, CreditCard, Check, X, Clock } from 'react-feather';
 
-import { Text, Button } from '../../../../../../components';
+import { Text, Button, Card } from '../../../../../../components';
 import theme from '../../../../../../utils/theme';
 import { Restaurant } from '../../../../../../types/constants';
 import StarRating from '../StarRating';
@@ -10,10 +10,17 @@ import { Classes } from './styles';
 interface RestaurantCardProps {
   restaurant: Restaurant;
   classes: Classes
+  onSelect: () => void;
+  selected: boolean;
 }
 
-const RestaurantCard: FC<RestaurantCardProps> = ({ restaurant = {}, classes = {} }) => (
-  <div className={classes.restaurantCard} key={restaurant.id}>
+const RestaurantCard: FC<RestaurantCardProps> = ({
+  restaurant = {},
+  classes = {},
+  onSelect = () => {},
+  selected = false
+}) => (
+  <Card className={classes.restaurantCard}>
     <div className={classes.imageWrapper}>
       <div className={classes.restaurantImg} style={{ backgroundImage: `url(${restaurant.thumbnail})` }}>
         {!restaurant.thumbnail && <Image size={50} />}
@@ -24,8 +31,8 @@ const RestaurantCard: FC<RestaurantCardProps> = ({ restaurant = {}, classes = {}
             View Menu
           </Button>
         </a>
-        <Button secondary icon={<Heart />}>
-          Favourite
+        <Button secondary={!selected} onClick={onSelect} icon={<Heart />}>
+          { selected ? 'Unfavourite' : 'Favourite' }
         </Button>
       </div>
     </div>
@@ -70,7 +77,7 @@ const RestaurantCard: FC<RestaurantCardProps> = ({ restaurant = {}, classes = {}
         <Text className={classes.inlineText}>{restaurant.openHours}</Text>
       </div>
     </div>
-  </div>
+  </Card>
 )
 
 export default RestaurantCard;

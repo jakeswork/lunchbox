@@ -9,7 +9,7 @@ export default (theme: Theme): Record<string | number | symbol, string | JssStyl
     paddingRight: 32,
     outline: "none",
     border: `1px solid ${theme.colorGrey}`,
-    borderRadius: 4,
+    borderRadius: 8,
     fontSize: 16,
     width: "calc(100% - 50px)",
     fontFamily: theme.fontFamily
@@ -52,5 +52,9 @@ export default (theme: Theme): Record<string | number | symbol, string | JssStyl
     bottom: '50%',
     marginBottom: -8,
     userSelect: 'none',
+  },
+  error: {
+    borderColor: theme.colorRed,
+    color: theme.colorRed,
   }
 });

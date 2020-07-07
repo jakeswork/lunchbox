@@ -22,7 +22,7 @@ const defaultStyles = (theme: Theme) => ({
   MozAppearance: "none",
   appearance: "none",
   cursor: 'pointer',
-  borderRadius: 4,
+  borderRadius: 8,
   fontFamily: theme.fontFamily,
   padding: "16px 32px"
 });
@@ -103,7 +103,10 @@ export default (theme: Theme): Record<string | number | symbol, string | JssStyl
     bottom: '50%',
     marginBottom: -12,
     userSelect: 'none',
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

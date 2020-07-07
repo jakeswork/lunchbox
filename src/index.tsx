@@ -6,6 +6,7 @@ import { ThemeProvider } from 'react-jss';
 import { Provider } from 'react-redux';
 
 import * as serviceWorker from './serviceWorker';
+import { Toast } from './components';
 import routes from "./routes";
 import theme from './utils/theme';
 import store from './reducers';
@@ -32,6 +33,7 @@ render(
           ))}
         </Switch>
       </Router>
+      <Toast />
     </ThemeProvider>
   </Provider>,
   document.getElementById('root')
