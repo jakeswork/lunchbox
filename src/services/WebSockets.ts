@@ -11,6 +11,7 @@ interface WebSockets {
 export type RoomUsers = {
   count: number;
   users: User[];
+  allUsersHaveVoted: boolean;
 }
 
 class WebSockets {
@@ -18,8 +19,8 @@ class WebSockets {
     this.socket = io(serverUrl, { transports: ['websocket'], forceNew: true })
   }
 
-  onRoomUsersUpdate (fn: (updatedRoom: RoomUsers) => any): void {
-    this.socket.on('roomUsersUpdated', (e: RoomUsers) => fn(e))
+  whenRoomUpdates (fn: (updatedRoom: RoomUsers) => any) {
+    return this.socket.on('roomUsersUpdated', fn)
   }
 
   sendMessage (message: string): void {

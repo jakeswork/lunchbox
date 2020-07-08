@@ -21,7 +21,6 @@ const defaultStyles = (theme: Theme) => ({
   WebkitAppearance: "none",
   MozAppearance: "none",
   appearance: "none",
-  cursor: 'pointer',
   borderRadius: 8,
   fontFamily: theme.fontFamily,
   padding: "16px 32px"
@@ -50,6 +49,7 @@ export default (theme: Theme): Record<string | number | symbol, string | JssStyl
 
       return theme.colorPrimary;
     },
+    cursor: ({ disabled = false, success = false }) => (disabled || success) ? 'default' : 'pointer',
     border: 0,
     color: "#fff",
     textShadow: "0 1px 0 rgba(0,0,0,0.03)"
@@ -83,11 +83,13 @@ export default (theme: Theme): Record<string | number | symbol, string | JssStyl
 
       return theme.colorPrimary;
     },
+    cursor: ({ disabled = false, success = false }) => (disabled || success) ? 'default' : 'pointer',
     backgroundColor: "transparent",
     border: '1px solid',
   },
   flat: {
     ...defaultStyles(theme),
+    cursor: ({ disabled = false, success = false }) => (disabled || success) ? 'default' : 'pointer',
     color: theme.colorPrimary,
     border: 0,
     WebkitBoxShadow: 0,

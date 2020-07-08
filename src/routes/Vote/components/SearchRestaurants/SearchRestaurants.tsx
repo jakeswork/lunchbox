@@ -125,6 +125,7 @@ const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {}, set
                   restaurant={r}
                   onSelect={() => onSelectRestaurant(r)}
                   selected={user.vote.selection.findIndex(restaurant => restaurant.id === r.id) > -1}
+                  disabled={user.vote.hasConfirmedSelection}
                 />
               ))}
             </InfiniteScroll>

@@ -12,13 +12,15 @@ interface RestaurantCardProps {
   classes: Classes
   onSelect: () => void;
   selected: boolean;
+  disabled: boolean;
 }
 
 const RestaurantCard: FC<RestaurantCardProps> = ({
   restaurant = {},
   classes = {},
   onSelect = () => {},
-  selected = false
+  selected = false,
+  disabled = false,
 }) => (
   <Card className={classes.restaurantCard}>
     <div className={classes.imageWrapper}>
@@ -31,7 +33,7 @@ const RestaurantCard: FC<RestaurantCardProps> = ({
             View Menu
           </Button>
         </a>
-        <Button secondary={!selected} onClick={onSelect} icon={<Heart />}>
+        <Button secondary={!selected} disabled={disabled} onClick={onSelect} icon={<Heart />}>
           { selected ? 'Unfavourite' : 'Favourite' }
         </Button>
       </div>

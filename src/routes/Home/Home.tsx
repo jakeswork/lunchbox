@@ -192,7 +192,7 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
             </Link>
             <CopyToClipboard text={`${window.location.href}vote/${user.room.id}`} onCopy={() => setUrlCopied(true)}>
               <Button success={urlCopied} secondary icon={urlCopied ? <Check /> : <Clipboard />}>
-                Copy Link
+                {urlCopied ? 'Success' : 'Copy Link'}
               </Button>
             </CopyToClipboard>
             <Link

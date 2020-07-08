@@ -1,6 +1,6 @@
 export default {
   root: {
-    boxShadow: "0 16px 40px rgba(0,0,0,0.12)",
+    boxShadow: "0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)",
     background: "#fff",
     borderRadius: 8,
     display: "inline-block",

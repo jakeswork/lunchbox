@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Check, Trash2 } from 'react-feather';
+import { Check, Trash2, ThumbsUp } from 'react-feather';
 
 import { Card, Text, Button } from '../../../../components';
 import WebSockets from '../../../../services/WebSockets'
@@ -52,13 +52,13 @@ const Selection: FC<SelectionProps> = ({ user = {}, classes = {}, setUser = () =
         }
       </div>
       <Button
-        disabled={!user.vote?.selection.length || user.vote?.hasConfirmedSelection}
-        icon={<Check />}
+        disabled={!user.vote?.selection.length}
+        success={user.vote?.hasConfirmedSelection}
+        icon={user.vote?.hasConfirmedSelection ? <Check /> : <ThumbsUp />}
         style={{ width: '100%' }}
         onClick={confirmSelection}
-        loading={user.vote?.hasConfirmedSelection}
       >
-        { user.vote?.hasConfirmedSelection ? "Waiting For Others" : `I'm Ready` }
+        { user.vote?.hasConfirmedSelection ? "Vote Submitted" : `I'm Ready` }
       </Button>
     </Card>
   );

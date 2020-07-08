@@ -4,12 +4,12 @@ import { RouteComponentProps } from 'react-router';
 
 import { Text, Input, Modal, Button } from '../../components';
 import { Classes } from './styles';
+import { OptionalUserPayload } from "../../reducers/user/types";
 import WebSockets from '../../services/WebSockets';
 import { User } from "../../types/constants";
 import SearchRestaurants from './components/SearchRestaurants';
 import UsersInRoom from './components/UsersInRoom';
 import Selection from './components/Selection';
-import { OptionalUserPayload } from "../../reducers/user/types";
 
 interface MatchParams {
   id: string;

@@ -41,13 +41,7 @@ const Button: React.FC<ButtonProps> = ({
       {...props}
       className={cx(cN, className)}
     >
-      {danger ? (
-        "Error"
-      ) : success ? (
-        "Success!"
-      ) : (
-        children
-      )}
+      { children }
       {(icon && !loading) && (
         <div className={classes.buttonIcon}>
           { React.cloneElement(icon, { size: 20 }) }
