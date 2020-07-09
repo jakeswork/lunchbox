@@ -36,7 +36,8 @@ const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {}, set
     }
 
     if (user && user.room) getRestaurants()
-  }, [user])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const searchRestaurants = async () => {
     setRestaurantCatalogue(null)

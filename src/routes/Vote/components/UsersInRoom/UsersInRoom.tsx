@@ -1,13 +1,15 @@
 import React, { FC, useState, useEffect } from 'react';
 import { Check, X } from 'react-feather';
 import Tooltip from 'react-tooltip';
+import Confetti from 'react-dom-confetti';
 
-import WebSockets, { RoomUsers } from '../../../../services/WebSockets';
+import WebSockets, { RoomUsers, VoteResults } from '../../../../services/WebSockets';
 import theme from '../../../../utils/theme';
 import { Classes } from './styles';
 import { Text, Card, Modal } from '../../../../components';
 import { emit } from '../../../../components/Toast';
 import { User } from '../../../../types/constants';
+import RestaurantCard from '../SearchRestaurants/components/RestaurantCard';
 
 interface UsersInRoomProps {
   classes: Classes;
@@ -16,11 +18,12 @@ interface UsersInRoomProps {
 
 const UsersInRoom: FC<UsersInRoomProps> = ({ classes = {}, user = {} }) => {
   const [roomUsers, setRoomUsers] = useState<RoomUsers | null>(null)
+  const [voteResults, setVoteResults] = useState<VoteResults | null>(null)
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   Tooltip.rebuild()
 
-  const sendResultsInMessage = () => {
+  const sendVoteFinishedNotification = () => {
     const Component = () => (
       <>
         <Text bold>The votes are in! <span role="img" aria-label="face savouring food">😋</span></Text>
@@ -38,26 +41,54 @@ const UsersInRoom: FC<UsersInRoomProps> = ({ classes = {}, user = {} }) => {
   }
 
   useEffect(() => {
-    WebSockets.whenRoomUpdates((roomInfo) => {
-      if (roomInfo.allUsersHaveVoted) sendResultsInMessage()
-
-      return setRoomUsers(roomInfo)
+    WebSockets.whenRoomUpdates(setRoomUsers)
+    WebSockets.whenVoteIsFinished((results) => {
+      setVoteResults(results)
+      sendVoteFinishedNotification()
     })
   }, [])
 
   if (!roomUsers) return null;
 
+  const confettiProps = {
+    angle: 180,
+    spread: 360,
+    startVelocity: 40,
+    elementCount: 70,
+    dragFriction: 0.12,
+    duration: 3000,
+    stagger: 3,
+    width: "8px",
+    height: "8px",
+    perspective: "600px",
+  }
+
   return (
     <>
+      <div className={classes.confettiWrapper}>
+        <Confetti active={modalIsOpen} config={confettiProps} />
+      </div>
       <Modal
         isOpen={modalIsOpen}
-        title="Results"
+        title="Vote Results"
         onRequestClose={() => {
           setModalIsOpen(false)
-          sendResultsInMessage()
+          sendVoteFinishedNotification()
         }}
       >
-        <Text>Hello</Text>
+        <Text h4>Let's eat! <span role="img" aria-label="dinner">🍽️</span></Text>
+        <Text>Out of so many tasty choices, here's your top {voteResults?.mostCommonRestaurants.length === 1 ? 'pick' : 'picks'}:</Text>
+        <div className={classes.overflow}>
+          { voteResults?.mostCommonRestaurants.map(r => <RestaurantCard compact key={r.id} restaurant={r} />) }
+        </div>
+        <Text bold>
+          Below you can find your most commonly picked cuisines, regardless of restaurant.<br />
+          {voteResults?.mostCommonCuisines.map(cuisine =>
+            <div className={classes.pill} key={cuisine}>
+              <Text caption>{cuisine}</Text>
+            </div>
+          )}
+        </Text>
       </Modal>
       <Card>
         <Tooltip

@@ -1,12 +1,12 @@
 import { Theme } from "../../../../../../utils/theme";
 
 export default (theme: Theme) => ({
-  restaurantCard: {
+  restaurantCard: ({ compact = false }) => ({
     display: 'flex',
     justifyContent: 'space-between',
-    margin: 32,
-    padding: 24,
-  },
+    margin: compact ? 24 : 32,
+    padding: compact ? 16 : 24,
+  }),
   imageWrapper: {
     width: 'calc(40% - 16px)',
     marginRight: 24
@@ -27,9 +27,11 @@ export default (theme: Theme) => ({
     justifyContent: 'space-between',
     flexDirection: 'column'
   },
-  infoWrapper: {
-    width: '60%'
-  },
+  infoWrapper: ({ compact = false }) => ({
+    width: compact ? '100%' : '60%',
+    display: compact ? 'flex' : 'block',
+    alignItems: 'center',
+  }),
   inlineText: {
     display: 'inline',
     verticalAlign: 'middle',
@@ -43,7 +45,10 @@ export default (theme: Theme) => ({
   },
   bullet: {
     margin: '8px 0',
-  }
+  },
+  compact: ({ compact = false }) => ({
+    minWidth: compact ? '40%' : 'auto'
+  })
 });
 
 export type Classes = {
@@ -55,4 +60,5 @@ export type Classes = {
   inlineText: string;
   bulletIcon: string;
   bullet: string;
+  compact: string;
 };

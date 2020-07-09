@@ -11,7 +11,12 @@ interface WebSockets {
 export type RoomUsers = {
   count: number;
   users: User[];
-  allUsersHaveVoted: boolean;
+}
+
+export type VoteResults = {
+  users: User[];
+  mostCommonRestaurants: Restaurant[];
+  mostCommonCuisines: string [];
 }
 
 class WebSockets {
@@ -21,6 +26,10 @@ class WebSockets {
 
   whenRoomUpdates (fn: (updatedRoom: RoomUsers) => any) {
     return this.socket.on('roomUsersUpdated', fn)
+  }
+
+  whenVoteIsFinished (fn: (voteResults: VoteResults) => any) {
+    return this.socket.on('voteComplete', fn)
   }
 
   sendMessage (message: string): void {
