@@ -21,7 +21,16 @@ export type City = {
 export type Room = {
   id: string;
   city: City;
-  cuisines: number[]
+  cuisines: number[];
+  users?: string[];
+  messages?: Message[];
+}
+
+export type Message = {
+  from: string;
+  displayName?: string;
+  timestamp: string;
+  content: string;
 }
 
 export type Cuisine = {

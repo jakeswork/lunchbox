@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 
-import { City, User, Restaurant } from '../types/constants';
+import { City, User, Restaurant, Message } from '../types/constants';
 
 const serverUrl = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localhost:5000'
 
@@ -32,8 +32,12 @@ class WebSockets {
     return this.socket.on('voteComplete', fn)
   }
 
-  sendMessage (message: string): void {
-    this.socket.emit('chatMessage', message)
+  whenMessageHistoryUpdates (fn: (messageHistory: Message[]) => any) {
+    return this.socket.on('messageHistoryUpdated', fn)
+  }
+
+  sendMessage (content: string) {
+    return this.socket.emit('sendMessage', content)
   }
 
   createRoom (username: string, city: City, cuisines: number[]): Promise<User> {

@@ -1,4 +1,4 @@
-import styles from '../RestaurantCard/styles';
+import styles from '../../styles';
 import { Theme } from '../../../../../../utils/theme';
 
 export default (theme: Theme) => ({

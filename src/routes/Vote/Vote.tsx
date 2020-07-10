@@ -10,6 +10,7 @@ import { User } from "../../types/constants";
 import SearchRestaurants from './components/SearchRestaurants';
 import UsersInRoom from './components/UsersInRoom';
 import Selection from './components/Selection';
+import Messaging from './components/Messaging';
 
 interface MatchParams {
   id: string;
@@ -66,7 +67,7 @@ const Vote: FC<VoteProps> = ({
   }
 
   return (
-    <main className={classes.root}>
+    <>
       <Modal
         closeButton={false}
         isOpen={!user || !user.username || !user.username.length}
@@ -98,21 +99,24 @@ const Vote: FC<VoteProps> = ({
           </Button>
         </div>
       </Modal>
-      <Text
-        className={classes.logo}
-        h4
-        primaryColor
-      >
-        Appetite
-      </Text>
-      <div className={classes.colSm}>
-        <UsersInRoom />
-        <Selection />
-      </div>
-      <div className={classes.colMd}>
-        {user && user.username && user.username.length && <SearchRestaurants />}
-      </div>
-    </main>
+      <main className={classes.root}>
+        <Text
+          className={classes.logo}
+          h4
+          primaryColor
+        >
+          Appetite
+        </Text>
+        <div className={classes.colSm}>
+          <UsersInRoom />
+          <Selection />
+        </div>
+        <div className={classes.colMd}>
+          {user && user.username && user.username.length && <SearchRestaurants />}
+        </div>
+      </main>
+      { user && user.username && user.username.length && <Messaging /> }
+    </>
   )
 }
 

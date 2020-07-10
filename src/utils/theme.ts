@@ -12,6 +12,7 @@ interface ThemeMedia {
 export interface Theme {
   fontFamily: string;
   colorPrimary: Color;
+  colorPrimaryLight: Color;
   colorSecondary: Color;
   colorRed: Color;
   colorGreen: Color;
@@ -33,6 +34,7 @@ const colorAmber = "#ff9800";
 const theme: Theme = {
   fontFamily: `"Apercu",-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol`,
   colorPrimary: primaryColor.hsl().string(),
+  colorPrimaryLight: primaryColor.lighten(0.4).hsl().string(),
   colorSecondary: "#ff5960",
   colorRed: "#f44336",
   colorWhite: primaryColor.lighten(0.99).hsl().string(),

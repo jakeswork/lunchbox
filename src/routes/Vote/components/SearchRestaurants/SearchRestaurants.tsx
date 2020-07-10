@@ -8,8 +8,8 @@ import { User, Restaurant } from '../../../../types/constants';
 import { Input } from '../../../../components';
 import { emit } from '../../../../components/Toast';
 import { Classes } from './styles';
-import RestaurantCard from './components/RestaurantCard';
-import LoadingCard from './components/LoadingCard';
+import RestaurantCard from '../RestaurantCard';
+import LoadingCard from '../RestaurantCard/components/LoadingCard';
 import { OptionalUserPayload } from '../../../../reducers/user/types';
 
 interface SearchRestaurantsProps {

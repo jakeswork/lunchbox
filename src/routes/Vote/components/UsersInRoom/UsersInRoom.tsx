@@ -9,7 +9,7 @@ import { Classes } from './styles';
 import { Text, Card, Modal } from '../../../../components';
 import { emit } from '../../../../components/Toast';
 import { User } from '../../../../types/constants';
-import RestaurantCard from '../SearchRestaurants/components/RestaurantCard';
+import RestaurantCard from '../RestaurantCard';
 
 interface UsersInRoomProps {
   classes: Classes;
@@ -77,18 +77,16 @@ const UsersInRoom: FC<UsersInRoomProps> = ({ classes = {}, user = {} }) => {
         }}
       >
         <Text h4>Let's eat! <span role="img" aria-label="dinner">🍽️</span></Text>
-        <Text>Out of so many tasty choices, here's your top {voteResults?.mostCommonRestaurants.length === 1 ? 'pick' : 'picks'}:</Text>
+        <Text bold>Out of so many tasty choices, our top {voteResults?.mostCommonRestaurants.length === 1 ? 'pick is' : 'picks are'}...</Text>
         <div className={classes.overflow}>
           { voteResults?.mostCommonRestaurants.map(r => <RestaurantCard compact key={r.id} restaurant={r} />) }
         </div>
-        <Text bold>
-          Below you can find your most commonly picked cuisines, regardless of restaurant.<br />
-          {voteResults?.mostCommonCuisines.map(cuisine =>
-            <div className={classes.pill} key={cuisine}>
-              <Text caption>{cuisine}</Text>
-            </div>
-          )}
-        </Text>
+        <Text bold>Regardless of restaurant, most of us are in the mood for</Text>
+        {voteResults?.mostCommonCuisines.map(cuisine =>
+          <div className={classes.pill} key={cuisine}>
+            <Text caption>{cuisine}</Text>
+          </div>
+        )}
       </Modal>
       <Card>
         <Tooltip

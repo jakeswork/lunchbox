@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { Image, ExternalLink, Heart, MapPin, Phone, CreditCard, Check, X, Clock } from 'react-feather';
 
-import { Text, Button, Card } from '../../../../../../components';
-import theme from '../../../../../../utils/theme';
-import { Restaurant } from '../../../../../../types/constants';
-import StarRating from '../StarRating';
+import { Text, Button, Card } from '../../../../components';
+import theme from '../../../../utils/theme';
+import { Restaurant } from '../../../../types/constants';
+import StarRating from './components/StarRating';
 import { Classes } from './styles';
 
 interface RestaurantCardProps {

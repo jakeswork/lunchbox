@@ -1,4 +1,4 @@
-import { Theme } from "../../../../../../utils/theme";
+import { Theme } from "../../../../utils/theme";
 
 export default (theme: Theme) => ({
   restaurantCard: ({ compact = false }) => ({
