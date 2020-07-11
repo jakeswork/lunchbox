@@ -43,13 +43,15 @@ export default (theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
-    marginTop: 24,
     '& > p': {
       color: theme.textPrimary,
       marginBottom: '4px 0',
       background: theme.colorPrimaryLight,
       borderRadius: 8,
       padding: '8px 16px',
+    },
+    '& > span': {
+      marginTop: 24
     }
   },
   myMessage: {

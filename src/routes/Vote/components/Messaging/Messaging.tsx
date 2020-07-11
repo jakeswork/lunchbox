@@ -30,6 +30,16 @@ const Messaging: FC<MessagingProps> = ({ classes = {}, user = {} }) => {
   const messagesWrapper = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    async function getMessageHistory () {
+      const messages = await WebSockets.getMessageHistory()
+
+      if (!messages) return null;
+
+      return setMessageHistory(messages)
+    }
+
+    getMessageHistory()
+
     WebSockets.whenMessageHistoryUpdates((messageHistory) => {
       setMessageHistory(messageHistory);
 
@@ -56,7 +66,7 @@ const Messaging: FC<MessagingProps> = ({ classes = {}, user = {} }) => {
           <Text h4>Messages</Text>
           <div className={classes.messageWrapper} ref={messagesWrapper}>
             {
-              messageHistory.map((message) => {
+              messageHistory.map((message, i) => {
                 const time = formatDate(message.timestamp);
 
                 return (
@@ -64,7 +74,11 @@ const Messaging: FC<MessagingProps> = ({ classes = {}, user = {} }) => {
                     <div className={cx(classes.messageBubble, {
                       [classes.myMessage as string]: message.from === user.id
                     })}>
-                      <Text bold caption>{message.displayName}, {time}</Text>
+                      {
+                        (!messageHistory[i - 1] || (messageHistory[i - 1] && messageHistory[i - 1].from !== message.from)) && (
+                          <Text bold caption>{message.displayName}, {time}</Text>
+                        )
+                      }
                       <Text>{message.content}</Text>
                     </div>
                   </Fragment>

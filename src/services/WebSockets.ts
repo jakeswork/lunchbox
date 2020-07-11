@@ -40,6 +40,16 @@ class WebSockets {
     return this.socket.emit('sendMessage', content)
   }
 
+  getMessageHistory (): Promise<Message[]> {
+    return new Promise((res, rej) => {
+      this.socket.emit('getMessageHistory')
+
+      this.socket.on('messageHistory', (messages: Message[]) => res(messages))
+
+      this.socket.on('getMessageHistoryError', (message: string) => rej(new Error(message)))
+    })
+  }
+
   createRoom (username: string, city: City, cuisines: number[]): Promise<User> {
     return new Promise((res, rej) => {
       this.socket.emit('createRoom', username, city, cuisines)

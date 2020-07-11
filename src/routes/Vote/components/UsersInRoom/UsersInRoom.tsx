@@ -9,6 +9,7 @@ import { Classes } from './styles';
 import { Text, Card, Modal } from '../../../../components';
 import { emit } from '../../../../components/Toast';
 import { User } from '../../../../types/constants';
+import { user as placeholderUser } from '../../../../utils/placeholders';
 import RestaurantCard from '../RestaurantCard';
 
 interface UsersInRoomProps {
@@ -16,8 +17,8 @@ interface UsersInRoomProps {
   user: User
 }
 
-const UsersInRoom: FC<UsersInRoomProps> = ({ classes = {}, user = {} }) => {
-  const [roomUsers, setRoomUsers] = useState<RoomUsers | null>(null)
+const UsersInRoom: FC<UsersInRoomProps> = ({ classes = {}, user = placeholderUser }) => {
+  const [roomUsers, setRoomUsers] = useState<RoomUsers | null>({ count: 1, users: [user] })
   const [voteResults, setVoteResults] = useState<VoteResults | null>(null)
   const [modalIsOpen, setModalIsOpen] = useState(false);
 

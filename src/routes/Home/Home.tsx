@@ -70,7 +70,7 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
     <main className={classes.main}>
       <img src={header} alt="Man sitting on chef's hat" className={classes.headingImg} />
       <div>
-        <Text h1 primaryColor>Appetite</Text>
+        <Text h1 primaryColor>appetite</Text>
         <Text h4>Vote for the next place to eat <br/>from over thousands of local<br/>restaurants and cuisines.</Text>
         <div className={classes.buttonsContainer}>
           <Button
