@@ -7,6 +7,7 @@ import CopyToClipboard from 'react-copy-to-clipboard';
 
 import WebSockets from '../../services/WebSockets';
 import header from '../../images/header.svg';
+import logo from '../../images/appetite-logo-transparent.png';
 import { Text, Button, Input, Modal } from '../../components';
 import { Classes } from './styles';
 import { User, City } from '../../types/constants';
@@ -69,8 +70,9 @@ const Home: FC<IHomeProps> = ({ classes = {}, setUser, user, history }) => {
   return (
     <main className={classes.main}>
       <img src={header} alt="Man sitting on chef's hat" className={classes.headingImg} />
+      <img src={logo} alt="Appetite Logo" className={classes.logo} />
       <div>
-        <Text h1 primaryColor>appetite</Text>
+        <Text h1 secondaryColor><em>appetite</em></Text>
         <Text h4>Vote for the next place to eat <br/>from over thousands of local<br/>restaurants and cuisines.</Text>
         <div className={classes.buttonsContainer}>
           <Button

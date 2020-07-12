@@ -1,7 +1,8 @@
 import color from 'color';
 import { Color } from "csstype";
 import 'normalize.css';
-import 'apercu-font';
+// import 'apercu-font';
+import 'typeface-muli';
 
 interface ThemeMedia {
   mobile?: string;
@@ -26,16 +27,16 @@ export interface Theme {
   media: ThemeMedia;
 }
 
-const primaryColor = color("#F9A826", "hex")
+const primaryColor = color("#FE3E57", "hex")
 
 const colorGreen = "#4caf50";
 const colorBlue = "#2196f3";
 const colorAmber = "#ff9800";
 const theme: Theme = {
-  fontFamily: `"Apercu",-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol`,
+  fontFamily: `"Muli",-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol`,
   colorPrimary: primaryColor.hsl().string(),
   colorPrimaryLight: primaryColor.lighten(0.4).hsl().string(),
-  colorSecondary: "#ff5960",
+  colorSecondary: "#1F2255",
   colorRed: "#f44336",
   colorWhite: primaryColor.lighten(0.99).hsl().string(),
   colorGreen,

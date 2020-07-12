@@ -14,6 +14,8 @@ const colorFromProps = (props: TextProps, theme: Theme): string => {
 
   if (props.primaryColor) color = theme.colorPrimary;
 
+  if (props.secondaryColor) color = theme.colorSecondary;
+
   if (props.red) color = theme.colorRed;
 
   if (props.green) color = theme.colorGreen;

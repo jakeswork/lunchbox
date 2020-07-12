@@ -6,6 +6,7 @@ import { Classes } from "./styles";
 export interface TextProps extends HTMLAttributes<HTMLElement> {
   bold?: boolean;
   primaryColor?: boolean;
+  secondaryColor?: boolean;
   classes: Classes;
   children?: any;
   h1?: boolean;

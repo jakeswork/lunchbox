@@ -11,6 +11,7 @@ import SearchRestaurants from './components/SearchRestaurants';
 import UsersInRoom from './components/UsersInRoom';
 import Selection from './components/Selection';
 import Messaging from './components/Messaging';
+import logotype from '../../images/appetite-logotype-transparent.png';
 
 interface MatchParams {
   id: string;
@@ -100,13 +101,9 @@ const Vote: FC<VoteProps> = ({
         </div>
       </Modal>
       <main className={classes.root}>
-        <Text
-          className={classes.logo}
-          h4
-          primaryColor
-        >
-          Appetite
-        </Text>
+        <header className={classes.header}>
+          <img src={logotype} alt="Appetite Logotype" />
+        </header>
         <div className={classes.colSm}>
           <UsersInRoom />
           <Selection />

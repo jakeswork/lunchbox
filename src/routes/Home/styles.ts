@@ -5,11 +5,20 @@ export default (theme: Theme) => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100vh'
+    height: '100vh',
+    backgroundColor: theme.colorWhite,
+  },
+  logo: {
+    position: 'fixed',
+    top: 32,
+    left: 32,
+    width: 48,
+    userSelect: 'none',
   },
   headingImg: {
     maxWidth: 420,
-    marginRight: 32
+    marginRight: 32,
+    userSelect: 'none',
   },
   buttonsContainer: {
     display: 'flex',
@@ -85,4 +94,5 @@ export type Classes = {
   copyButton: string;
   copyButtonIcon: string;
   joinVotePanel: string;
+  logo: string;
 }
