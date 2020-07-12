@@ -5,17 +5,17 @@ import { RouteConfiguration } from "./index.d";
 
 const routeConfiguration: RouteConfiguration[] = [
   {
-    path: "/",
+    path: "/appetite/",
     Component: Home,
     title: "Appetite | Find the perfect place to eat."
   },
   {
-    path: "/vote/:id",
+    path: "/appetite/vote/:id",
     Component: Vote,
     title: "Appetite | Vote for your favourite restaurants."
   },
   {
-    path: "/404",
+    path: "/appetite/404",
     Component: FOF,
     title: "Appetite | We couldn't find that vote..."
   }

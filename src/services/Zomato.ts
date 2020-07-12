@@ -1,6 +1,7 @@
 import { City, Cuisine, Restaurant } from '../types/constants';
+import isLocalhost from '../utils/isLocalhost';
 
-const serverUrl = process.env.REACT_APP_SERVER_ENDPOINT || 'http://localhost:5000'
+const serverUrl = isLocalhost ? 'http://localhost:5000' : 'https://appetite-server.herokuapp.com'
 
 interface SearchParams {
   [k: string]: string
