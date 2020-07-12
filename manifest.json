@@ -1,0 +1,20 @@
+{
+  "short_name": "Appetite",
+  "name": "Appetite | Find the perfect place to eat",
+  "icons": [
+    {
+      "src": "android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#FE3E57",
+  "background_color": "#ffffff"
+}
