@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "643d52b774afdfe8153cdbc31dfbd9fc",
+    "revision": "d5be90d4fc59bb59c745c4556dfcc9d8",
     "url": "/appetite/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/appetite/static/css/2.f3939dea.chunk.css"
   },
   {
-    "revision": "a495eb26348ae8936bcc",
+    "revision": "22ca139d7561a9dfa017",
     "url": "/appetite/static/css/main.fc205e6b.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/appetite/static/js/2.91288c92.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "a495eb26348ae8936bcc",
-    "url": "/appetite/static/js/main.ddfa433d.chunk.js"
+    "revision": "22ca139d7561a9dfa017",
+    "url": "/appetite/static/js/main.0eb2cc3d.chunk.js"
   },
   {
     "revision": "8fdf8dbae2292987cafb",
