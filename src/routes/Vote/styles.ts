@@ -28,16 +28,6 @@ export default (theme: Theme) => ({
   modal: {
     height: 'auto'
   },
-  header: {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    '& > img': {
-      width: 180,
-      marginLeft: 16
-    }
-  },
 });
 
 export type Classes = {
@@ -48,5 +38,4 @@ export type Classes = {
   colLg: string;
   colFull: string;
   modal: string;
-  header: string;
 };

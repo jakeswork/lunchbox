@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect, FormEvent } from "react";
 import { Star } from 'react-feather';
 import { RouteComponentProps } from 'react-router';
 
-import { Text, Input, Modal, Button } from '../../components';
+import { Text, Input, Modal, Button, Header } from '../../components';
 import { Classes } from './styles';
 import { OptionalUserPayload } from "../../reducers/user/types";
 import WebSockets from '../../services/WebSockets';
@@ -11,7 +11,6 @@ import SearchRestaurants from './components/SearchRestaurants';
 import UsersInRoom from './components/UsersInRoom';
 import Selection from './components/Selection';
 import Messaging from './components/Messaging';
-import logotype from '../../images/appetite-logotype-transparent.png';
 
 interface MatchParams {
   id: string;
@@ -100,10 +99,8 @@ const Vote: FC<VoteProps> = ({
           </Button>
         </div>
       </Modal>
+      <Header />
       <main className={classes.root}>
-        <header className={classes.header}>
-          <img src={logotype} alt="Appetite Logotype" />
-        </header>
         <div className={classes.colSm}>
           <UsersInRoom />
           <Selection />

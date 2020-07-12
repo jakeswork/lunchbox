@@ -94,7 +94,7 @@ const SearchRestaurants: FC<SearchRestaurantsProps> = ({ user, classes = {}, set
     <Fragment>
       <Input
         width="100%"
-        placeholder="Search for a restaurant"
+        placeholder="Start typing a restaurant name, cuisine, etc"
         icon={<Search style={{ cursor: 'pointer' }} onClick={searchRestaurants} />}
         onEnterPressed={searchRestaurants}
         value={searchQuery}

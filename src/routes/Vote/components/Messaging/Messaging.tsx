@@ -16,8 +16,21 @@ const Messaging: FC<MessagingProps> = ({ classes = {}, user = {} }) => {
   const [chatModuleOpen, setChatModuleOpen] = useState(false);
   const [messageHistory, setMessageHistory] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
+  const [unreadMessageCount, setUnreadMessageCount] = useState(0);
 
-  const toggleChatModule = () => setChatModuleOpen(!chatModuleOpen);
+  const toggleChatModule = () => {
+    setChatModuleOpen(!chatModuleOpen);
+    setUnreadMessageCount(0);
+    scrollToBottomOfChat();
+  }
+
+  const scrollToBottomOfChat = () => {
+    if (messagesWrapper && messagesWrapper.current) {
+      messagesWrapper.current.scrollTop = messagesWrapper.current.scrollHeight
+
+      sendMessageInput?.current?.focus()
+    }
+  }
 
   const sendMessage = () => {
     if (!message) return null;
@@ -28,6 +41,12 @@ const Messaging: FC<MessagingProps> = ({ classes = {}, user = {} }) => {
   }
 
   const messagesWrapper = useRef<HTMLDivElement>(null)
+  const sendMessageInput = useRef<HTMLInputElement>(null)
+
+  const updateMessageHistory = (newHistory: Message[]) => {
+    setMessageHistory(newHistory)
+    setUnreadMessageCount(unreadMessageCount + 1)
+  }
 
   useEffect(() => {
     async function getMessageHistory () {
@@ -40,27 +59,31 @@ const Messaging: FC<MessagingProps> = ({ classes = {}, user = {} }) => {
 
     getMessageHistory()
 
-    WebSockets.whenMessageHistoryUpdates((messageHistory) => {
-      setMessageHistory(messageHistory);
-
-      if (messagesWrapper && messagesWrapper.current) {
-        messagesWrapper.current.scrollTop = messagesWrapper.current.scrollHeight
-      }
+    WebSockets.whenMessageHistoryUpdates((newHistory) => {
+      updateMessageHistory(newHistory)
+      scrollToBottomOfChat()
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const formatDate = (timestamp: string) => {
     const date = new Date(timestamp);
+    const formatTime = (time: number) => time < 9 ? `0${time}` : time
+    const hoursFormatted = formatTime(date.getHours())
+    const minutesFormatted = formatTime(date.getMinutes())
 
-    return `${date.getHours()}:${date.getMinutes()}`
+    return `${hoursFormatted}:${minutesFormatted}`
   }
 
   return (
     <>
       <button className={classes.button} onClick={toggleChatModule}>
+        { (unreadMessageCount > 0 && !chatModuleOpen) &&
+          <div className={classes.unreadMessageCountBadge}>{unreadMessageCount}</div>
+        }
         <MessageSquare size={20} />
       </button>
-      <FadeTransition in={chatModuleOpen} mountOnEnter timeout={250}>
+      <FadeTransition in={chatModuleOpen} timeout={250}>
         <Card className={classes.chat}>
           <X onClick={toggleChatModule} size={20} className={classes.closeButton} />
           <Text h4>Messages</Text>
@@ -87,8 +110,8 @@ const Messaging: FC<MessagingProps> = ({ classes = {}, user = {} }) => {
             }
           </div>
           <Input
+            ref={sendMessageInput}
             placeholder="Send a message"
-            autoFocus
             icon={<Send onClick={sendMessage} style={{ cursor: 'pointer' }} />}
             onChange={(e) => setMessage(e.target.value)}
             value={message}

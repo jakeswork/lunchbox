@@ -14,7 +14,7 @@ export default (theme: Theme) => ({
     right: 32,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   chat: {
     position: 'fixed',
@@ -60,6 +60,20 @@ export default (theme: Theme) => ({
       background: theme.colorPrimary,
       color: 'white',
     }
+  },
+  unreadMessageCountBadge: {
+    height: 16,
+    width: 16,
+    padding: 8,
+    borderRadius: 50,
+    background: theme.colorSecondary,
+    color: 'white',
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    fontFamily: theme.fontFamily,
+    fontWeight: 'bold',
+    fontSize: 12,
   }
 });
 
@@ -70,4 +84,5 @@ export type Classes = {
   messageWrapper: string;
   messageBubble: string;
   myMessage: string;
+  unreadMessageCountBadge: string;
 };
